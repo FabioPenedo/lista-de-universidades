@@ -1,6 +1,6 @@
 import { Schema, model, connection } from "mongoose";
 
-type UserType = {
+export type UserType = {
     domains: [string]
     alpha_two_code: string,
     country: string,

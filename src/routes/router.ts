@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', ApiController.home);
 
-router.post('/universities/register', ApiController.registerUniversities)
+router.post('/insertapi', ApiController.insertApi)
 
 
 export default router;

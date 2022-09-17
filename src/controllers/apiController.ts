@@ -1,17 +1,29 @@
 import { Request, Response } from 'express';
-import Universities from '../models/Universities';
+import { UserType } from '../models/Universities';
 import { requestApi } from '../helpers/requestApi';
+import * as ApiService from '../services/apiService';
 
 export const home = async (req: Request, res: Response) => {
   
 };
 
-export const registerUniversities = async (req: Request, res: Response) => {
-  if(req.body.domains && req.body.country && req.body.name) {
-    let {domains, country, name} = req.body
-    let returnApi = await requestApi(country)
-    res.json({api: returnApi})
-    return
-  }
-  res.json({ error: 'nao enviado' });
+export const insertApi = async (req: Request, res: Response) => {
+  if(req.body.country) {
+    let country: string = req.body.country
+    let countryUpperCase = country[0].toUpperCase() + country.substring(1);
+    let returnApi: UserType[] = await requestApi(country)
+    if(returnApi.length > 0) {
+      const date = await ApiService.insertDate(returnApi, countryUpperCase)
+      if(date instanceof Error) {
+        res.json({ error: date.message });
+        return;
+      } else {
+        res.status(201);
+        res.json({ date: true});
+        return;
+      }
+    }
+  };
+
+  res.json({ error: 'Country não foi enviado ou não existe na API!' });
 }
