@@ -11,11 +11,11 @@ type UserType = {
 
 const schema = new Schema<UserType>({
     domains: [String],
-    alpha_two_code: { type: String, required: true },
-    country: { type: String, required: true },
+    alpha_two_code: String,
+    country: String,
     web_pages: [String],
-    name: { type: String },
-    stateprovince: { type: String }
+    name: String,
+    stateprovince: String
 });
 
 const modelName: string = 'Universities';
