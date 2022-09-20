@@ -1,6 +1,7 @@
 import Universities from '../models/Universities';
 import { UserType } from '../models/Universities';
 import nameUniversities from '../models/nameUniversities';
+import { ObjectId } from 'mongoose';
 
 export const insertDate = async (returnApi: UserType[], country: string) => {
   const hasDate = await Universities.find({country})
@@ -26,17 +27,6 @@ export const insertDate = async (returnApi: UserType[], country: string) => {
       })
     })
     await insertNameUniversities(apiFiltered)
-
-    /*for(let i in returnApi) {
-      await Universities.create({
-        domains: returnApi[i].domains,
-        alpha_two_code: returnApi[i].alpha_two_code,
-        country: returnApi[i].country,
-        web_pages: returnApi[i].web_pages,
-        name: returnApi[i].name,
-        state_province: returnApi[i].stateprovince
-      })
-    };*/
   };
 };
 
@@ -50,4 +40,14 @@ export const insertNameUniversities = async (apiFiltered: UserType[]) => {
 
 export const all = async () => {
   return await Universities.find({})
+}
+
+export const country = async (nameCountry: string) => {
+  return await Universities.find({
+    country: nameCountry
+  })
+}
+
+export const id = async (numberId: string) => {
+  return await Universities.findById(numberId)
 }

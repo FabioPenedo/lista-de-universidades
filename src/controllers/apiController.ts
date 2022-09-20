@@ -28,3 +28,16 @@ export const all = async (req: Request, res: Response) => {
   const returnDate = await ApiService.all()
   res.json({ Dates: returnDate })
 };
+
+export const filterCountry = async(req: Request, res: Response) => {
+  let nameCountry: string = req.params.name
+  let countryUpperCase = nameCountry[0].toUpperCase() + nameCountry.substring(1);
+  const returnCountry = await ApiService.country(countryUpperCase)
+  res.json({Date: returnCountry})
+}
+
+export const filterId = async(req: Request, res: Response) => {
+  let numberId: string = req.params.id
+  const returnId = await ApiService.id(numberId)
+  res.json({Date: returnId})
+}
