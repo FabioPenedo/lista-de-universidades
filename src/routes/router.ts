@@ -3,7 +3,7 @@ import * as ApiController from '../controllers/apiController';
 
 const router = Router();
 
-router.get('/', ApiController.home);
+router.get('/universities', ApiController.all);
 
 router.post('/insertapi', ApiController.insertApi)
 

@@ -3,10 +3,6 @@ import { UserType } from '../models/Universities';
 import { requestApi } from '../helpers/requestApi';
 import * as ApiService from '../services/apiService';
 
-export const home = async (req: Request, res: Response) => {
-  
-};
-
 export const insertApi = async (req: Request, res: Response) => {
   if(req.body.country) {
     let country: string = req.body.country
@@ -19,7 +15,7 @@ export const insertApi = async (req: Request, res: Response) => {
         return;
       } else {
         res.status(201);
-        res.json({ date: true});
+        res.json({ Date: true});
         return;
       }
     }
@@ -27,3 +23,8 @@ export const insertApi = async (req: Request, res: Response) => {
 
   res.json({ error: 'Country não foi enviado ou não existe na API!' });
 }
+
+export const all = async (req: Request, res: Response) => {
+  const returnDate = await ApiService.all()
+  res.json({ Dates: returnDate })
+};
