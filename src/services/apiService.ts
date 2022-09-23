@@ -3,9 +3,9 @@ import { UserType } from '../models/Universities';
 import nameUniversities from '../models/nameUniversities';
 import { ObjectId } from 'mongoose';
 
-export const insertDate = async (returnApi: UserType[], country: string) => {
-  const hasDate = await Universities.find({country})
-  if(hasDate.length > 0) {
+export const insertData = async (returnApi: UserType[], country: string) => {
+  const hasData = await Universities.find({country})
+  if(hasData.length > 0) {
     return new Error('Dados já existe');
   } else {
     const apiUnique  = new Map()
@@ -40,14 +40,54 @@ export const insertNameUniversities = async (apiFiltered: UserType[]) => {
 
 export const all = async () => {
   return await Universities.find({})
-}
+};
 
 export const country = async (nameCountry: string) => {
   return await Universities.find({
     country: nameCountry
   })
-}
+};
 
 export const id = async (numberId: string) => {
-  return await Universities.findById(numberId)
+  if(numberId.length == 24) {
+    return await Universities.findById(numberId)
+  } else {
+    return new Error('Mínimo de caracteres a ser enviado é 24');
+  }
+};
+
+export const registerUniversity = async (initialsUpperCase: string, web_pages: string, nameUpperCase: string, countryUpperCase: string, domains: string, stateProvinceUpperCase?: string) => {
+  const checkRegisteredUniversity = await Universities.find({
+    country: countryUpperCase,
+    name: nameUpperCase
+  });
+
+  if(checkRegisteredUniversity.length > 0) {
+    return new Error('Ja existe esta universidade cadastrada');
+  } else {
+    let newUniversities = await Universities.create({
+      domains: domains,
+      alpha_two_code: initialsUpperCase,
+      country: countryUpperCase,
+      web_pages: web_pages,
+      name: nameUpperCase,
+      state_province: stateProvinceUpperCase
+    });
+
+    const checkUniversityName = await nameUniversities.find({
+      name: nameUpperCase
+    })
+    if(checkUniversityName.length > 0) {
+      return new Error('Ja existe esta universidade cadastrada');
+    } else {
+      await nameUniversities.create({
+        name: nameUpperCase
+      })
+    }
+    return newUniversities
+  }
 }
+
+/*export const updatedData = async (numberId: string) => {
+
+}*/

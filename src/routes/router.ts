@@ -8,6 +8,9 @@ router.get('/universities=country/:name', ApiController.filterCountry)
 router.get('/universities/:id', ApiController.filterId)
 
 router.post('/insertapi', ApiController.insertApi)
+router.post('/universities/create', ApiController.createNewUniversities)
+
+//router.put('/universities/update/:id', ApiController.changeData)
 
 
 export default router;
