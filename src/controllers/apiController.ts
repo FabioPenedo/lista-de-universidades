@@ -71,10 +71,20 @@ export const createNewUniversities = async (req: Request, res: Response) => {
 };
 
 
-/*export const changeData = async (req: Request, res: Response) => {
+export const changeData = async (req: Request, res: Response) => {
   let numberId: string = req.params.id
   if(req.body.web_pages && req.body.name && req.body.domains) {
-    const newData = await ApiService.updatedData(numberId)
-    res.json({ Data: newData })
+    let {web_pages, name, domains} = req.body
+    let nameUpperCase = name.replace(/(^\w{1})|(\s+\w{1})/g, (letra: string) => letra.toUpperCase());
+    const newData = await ApiService.updatedData(numberId, web_pages, nameUpperCase, domains)
+    if(newData instanceof Error) {
+      res.json({ error: newData.message });
+      return;
+    } else {
+      res.json({ Data: newData});
+      return;
+    }
   }
-}*/
+
+  res.json({ error: 'Informações não enviadas' });
+}

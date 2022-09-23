@@ -78,7 +78,7 @@ export const registerUniversity = async (initialsUpperCase: string, web_pages: s
       name: nameUpperCase
     })
     if(checkUniversityName.length > 0) {
-      return new Error('Ja existe esta universidade cadastrada');
+      null
     } else {
       await nameUniversities.create({
         name: nameUpperCase
@@ -88,6 +88,15 @@ export const registerUniversity = async (initialsUpperCase: string, web_pages: s
   }
 }
 
-/*export const updatedData = async (numberId: string) => {
-
-}*/
+export const updatedData = async (numberId: string, web_pages: string, nameUpperCase: string, domains: string) => {
+  if(numberId.length == 24) {
+    let data = await Universities.findOne({_id: numberId})
+    data.web_pages = web_pages
+    data.name = nameUpperCase
+    data.domains = domains
+    await data.save()
+    return data
+  } else {
+    return new Error('Mínimo de caracteres a ser enviado é 24');
+  }
+}
