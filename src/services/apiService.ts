@@ -100,3 +100,17 @@ export const updatedData = async (numberId: string, web_pages: string, nameUpper
     return new Error('Mínimo de caracteres a ser enviado é 24');
   }
 }
+
+export const deletedData = async (numberId: string) => {
+  if(numberId.length == 24) {
+    let data = await Universities.findOne({_id: numberId})
+    if(data !== null) {
+      data.remove()
+      return data
+    } else {
+      return new Error('Não existe esse ID');
+    }
+  } else {
+    return new Error('Mínimo de caracteres a ser enviado é 24');
+  }
+}

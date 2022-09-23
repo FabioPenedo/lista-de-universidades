@@ -88,3 +88,15 @@ export const changeData = async (req: Request, res: Response) => {
 
   res.json({ error: 'Informações não enviadas' });
 }
+
+export const deleteData = async (req: Request, res: Response) => {
+  let numberId: string = req.params.id
+  let deleted = await ApiService.deletedData(numberId)
+  if(deleted instanceof Error) {
+    res.json({ error: deleted.message });
+    return;
+  } else {
+    res.json({ deleted: true});
+    return;
+  }
+}

@@ -4,13 +4,14 @@ import * as ApiController from '../controllers/apiController';
 const router = Router();
 
 router.get('/universities', ApiController.all);
-router.get('/universities=country/:name', ApiController.filterCountry)
-router.get('/universities/:id', ApiController.filterId)
+router.get('/universities=country/:name', ApiController.filterCountry);
+router.get('/universities/:id', ApiController.filterId);
 
-router.post('/insertapi', ApiController.insertApi)
-router.post('/universities/create', ApiController.createNewUniversities)
+router.post('/insertapi', ApiController.insertApi);
+router.post('/universities/create', ApiController.createNewUniversities);
 
-router.put('/universities/update/:id', ApiController.changeData)
+router.put('/universities/update/:id', ApiController.changeData);
+router.delete('/universities/delete/:id', ApiController.deleteData);
 
 
 export default router;
