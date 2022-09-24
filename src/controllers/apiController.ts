@@ -24,16 +24,12 @@ export const insertApi = async (req: Request, res: Response) => {
   res.json({ error: 'Country não foi enviado ou não existe na API!' });
 };
 
-export const all = async (req: Request, res: Response) => {
-  const returnData = await ApiService.all()
-  res.json({ Datas: returnData })
-};
+export const filter = async (req: Request, res: Response) => {
+  let country: string = req.query.country as string
+  let page: string = req.query.page as string
+  const returnData = await ApiService.allAndOne(country, page)
 
-export const filterCountry = async (req: Request, res: Response) => {
-  let nameCountry: string = req.params.name
-  let countryUpperCase = nameCountry[0].toUpperCase() + nameCountry.substring(1);
-  const returnCountry = await ApiService.country(countryUpperCase)
-  res.json({Data: returnCountry})
+  res.json({ Datas: returnData })
 };
 
 export const filterId = async (req: Request, res: Response) => {

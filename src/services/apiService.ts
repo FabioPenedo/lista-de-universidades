@@ -38,14 +38,25 @@ export const insertNameUniversities = async (apiFiltered: UserType[]) => {
   })
 };
 
-export const all = async () => {
-  return await Universities.find({})
-};
-
-export const country = async (nameCountry: string) => {
-  return await Universities.find({
-    country: nameCountry
-  })
+export const allAndOne = async (country: string, page: string) => {
+  if(country !== undefined) {
+    let countryUpperCase = country[0].toUpperCase() + country.substring(1);
+    let limit = 20;
+    let skip = limit * (parseInt(page)  - 1);
+  
+    if(page === "all") {
+      return await Universities.find({
+        country: countryUpperCase
+      }).skip(0).limit(0)
+    } else {
+      return await Universities.find({
+        country: countryUpperCase
+      }).limit(limit).skip(skip)
+    }
+    
+  } else {
+    return await Universities.find({})
+  }
 };
 
 export const id = async (numberId: string) => {
