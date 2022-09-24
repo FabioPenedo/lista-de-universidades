@@ -1,7 +1,6 @@
 import Universities from '../models/Universities';
 import { UserType } from '../models/Universities';
 import nameUniversities from '../models/nameUniversities';
-import { ObjectId } from 'mongoose';
 
 export const insertData = async (returnApi: UserType[], country: string) => {
   const hasData = await Universities.find({country})
